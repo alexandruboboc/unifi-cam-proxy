@@ -9,5 +9,6 @@ semver
 packaging
 pyunifiprotect
 reolinkapi
+pytapo
 websockets>=9.0.1
 xmltodict

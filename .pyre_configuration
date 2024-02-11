@@ -23,7 +23,8 @@
     { "site-package": "pyunifiprotect" },
     { "site-package": "reolinkapi" },
     { "site-package": "websockets" },
-    { "site-package": "yarl" }
+    { "site-package": "yarl" },
+    { "site-package": "pytapo" },
   ],
   "taint_models_path": "stubs/taint"
 }

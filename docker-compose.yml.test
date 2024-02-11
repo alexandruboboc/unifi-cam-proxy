@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  unifi-cam-proxy:
+    image: keshavdv/unifi-cam-proxy:dev
+    restart: unless-stopped
+    image: keshavdv/unifi-cam-proxy
+    volumes:
+      - "./client.pem:/client.pem"
+    command: unifi-cam-proxy -H 192.168.0.1 -c client.pem -t 0JYWnOr7TBLdQ4g88vxIa9aro6dGN7jN rtsp -s 'rtsp://192.168.0.171:8080/h264_pcm.sdp'
+

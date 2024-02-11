@@ -771,6 +771,7 @@ class UnifiCamBase(metaclass=ABCMeta):
     async def process_snapshot_request(
         self, msg: AVClientRequest
     ) -> Optional[AVClientResponse]:
+        print(f"AAAAAAAAAAAAAA {msg}")
         snapshot_type = msg["payload"]["what"]
         if snapshot_type in ["motionSnapshot", "smartDetectZoneSnapshot"]:
             path = self._motion_snapshot
@@ -833,6 +834,9 @@ class UnifiCamBase(metaclass=ABCMeta):
         if ws:
             await ws.send(json.dumps(msg).encode())
 
+    async def process_continuous_move(self, msg: AVClientRequest) -> AVClientResponse:
+        return True
+
     async def process(self, msg: bytes) -> bool:
         m = json.loads(msg)
         fn = m["functionName"]
@@ -848,6 +852,7 @@ class UnifiCamBase(metaclass=ABCMeta):
                 "UpdateFirmwareRequest",
                 "Reboot",
                 "ubnt_avclient_hello",
+                "ContinuousMove",
             ]
         ):
             return False
@@ -888,6 +893,8 @@ class UnifiCamBase(metaclass=ABCMeta):
             res = self.gen_response(
                 "ChangeSmartDetectSettings", response_to=m["messageId"]
             )
+        elif fn == "ContinuousMove":
+            res = await self.process_continuous_move(m)
         elif fn == "UpdateFirmwareRequest":
             await self.process_upgrade(m)
             return True
